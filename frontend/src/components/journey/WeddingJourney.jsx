@@ -15,7 +15,7 @@ export const WeddingJourney = () => (
             aria-hidden="true"
             className="pointer-events-none fixed inset-0 z-0 opacity-35"
             style={{
-                backgroundImage: "url(/images/pattern-tile.webp)",
+                backgroundImage: "url(/weddingSiteNew/images/pattern-tile.webp)",
                 backgroundSize: "1300px",
                 backgroundRepeat: "repeat",
             }}

@@ -4,15 +4,15 @@
 // ------------------------------------------------------------------
 
 export const images = {
-    temple: "/images/gopuram.webp",
-    ganesha: "/images/ganesha-clean.png",
-    ganeshaFramed: "/images/ganesha-framed.png",
-    closingLogo: "/images/closing-logo.png",
-    hashtag: "/images/hashtag-new.png",
-    cocktail: "/images/cocktail.webp",
-    mandap: "/images/FestivitiesMandap.png",
-    venue: "/images/venue-car.png",
-    pattern: "/images/pattern.webp",
+    temple: "/weddingSiteNew/images/gopuram.webp",
+    ganesha: "/weddingSiteNew/images/ganesha-clean.png",
+    ganeshaFramed: "/weddingSiteNew/images/ganesha-framed.png",
+    closingLogo: "/weddingSiteNew/images/closing-logo.png",
+    hashtag: "/weddingSiteNew/images/hashtag-new.png",
+    cocktail: "/weddingSiteNew/images/cocktail.webp",
+    mandap: "/weddingSiteNew/images/FestivitiesMandap.png",
+    venue: "/weddingSiteNew/images/venue-car.png",
+    pattern: "/weddingSiteNew/images/pattern.webp",
 };
 
 export const couple = {
@@ -63,12 +63,12 @@ export const meetTheCouple = {
     title: "Meet the Couple",
     intro: "A little bit of chaos, a lot of laughter, plenty of food, and one very long list of things we've decided to do together. Here's to many more stories, detours, and meals along the way.",
     photos: [
-        { src: "/images/meetTheCouple/0N7A3214.JPG", alt: "Couple portrait 1", pos: "center" },
-        { src: "/images/meetTheCouple/0N7A3828.JPG", alt: "Couple portrait 2", pos: "center" },
-        { src: "/images/meetTheCouple/0N7A4008.JPG", alt: "Couple portrait 3", pos: "center" },
-        { src: "/images/meetTheCouple/0N7A4446.JPG", alt: "Couple portrait 4", pos: "center" },
-        { src: "/images/meetTheCouple/0N7A4513.JPG", alt: "Couple portrait 5", pos: "center" },
-        { src: "/images/meetTheCouple/0N7A5056.JPG", alt: "Couple portrait 6", pos: "center" },
+        { src: "/weddingSiteNew/images/meetTheCouple/0N7A3214.JPG", alt: "Couple portrait 1", pos: "center" },
+        { src: "/weddingSiteNew/images/meetTheCouple/0N7A3828.JPG", alt: "Couple portrait 2", pos: "center" },
+        { src: "/weddingSiteNew/images/meetTheCouple/0N7A4008.JPG", alt: "Couple portrait 3", pos: "center" },
+        { src: "/weddingSiteNew/images/meetTheCouple/0N7A4446.JPG", alt: "Couple portrait 4", pos: "center" },
+        { src: "/weddingSiteNew/images/meetTheCouple/0N7A4513.JPG", alt: "Couple portrait 5", pos: "center" },
+        { src: "/weddingSiteNew/images/meetTheCouple/0N7A5056.JPG", alt: "Couple portrait 6", pos: "center" },
     ],
 };
 

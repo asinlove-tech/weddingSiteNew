@@ -48,24 +48,10 @@ export const ClosingMandap = () => {
         }
 
         // --------------------------------
-        // Closing logo
-        // --------------------------------
-        if (imgRef.current) {
-            const q = seg(p, 0.2, 0.62);
-
-            imgRef.current.style.opacity = String(q);
-
-            imgRef.current.style.transform = `
-                translateY(${(1 - q) * 56}px)
-                scale(${0.96 + q * 0.04})
-            `;
-        }
-
-        // --------------------------------
         // Closing text
         // --------------------------------
         if (textRef.current) {
-            const q = seg(p, 0.5, 0.78);
+            const q = seg(p, 0.25, 0.45);
 
             textRef.current.style.opacity = String(q);
 
@@ -75,15 +61,29 @@ export const ClosingMandap = () => {
         }
 
         // --------------------------------
+        // Closing logo
+        // --------------------------------
+        if (imgRef.current) {
+            const q = seg(p, 0.48, 0.68);
+
+            imgRef.current.style.opacity = String(q);
+
+            imgRef.current.style.transform = `
+                translateY(${(1 - q) * 40}px)
+                scale(${0.96 + q * 0.04})
+            `;
+        }
+
+        // --------------------------------
         // Hashtag
         // --------------------------------
         if (hashtagRef.current) {
-            const q = seg(p, 0.72, 0.92);
+            const q = seg(p, 0.72, 0.90);
 
             hashtagRef.current.style.opacity = String(q);
 
             hashtagRef.current.style.transform = `
-                translateY(${(1 - q) * 28}px)
+                translateY(${(1 - q) * 24}px)
                 scale(${0.96 + q * 0.04})
             `;
         }
@@ -133,14 +133,13 @@ export const ClosingMandap = () => {
                     className="
                         absolute
                         inset-x-0
-                        top-0
+                        top-[8vh]
                         z-20
                         flex
                         flex-col
                         items-center
                         gap-3
                         px-6
-                        pt-[9vh]
                         text-center
                         opacity-0
                         will-change-transform
@@ -197,12 +196,13 @@ export const ClosingMandap = () => {
                     className="
                         absolute
                         inset-x-0
-                        top-[50vh]
                         z-10
                         flex
                         justify-center
                         pointer-events-none
                         px-4
+
+                        top-[clamp(48vh,50vh,52vh)]
                     "
                 >
                     <img
@@ -222,14 +222,12 @@ export const ClosingMandap = () => {
                         className="
                             block
                             w-auto
-                            max-w-[80vw]
-                            max-h-[30vh]
+                            max-w-[clamp(65vw,70vw,78vw)]
+                            max-h-[clamp(22vh,26vh,32vh)]
                             opacity-0
                             will-change-transform
                             object-contain
                             [mask-image:linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.35)_18%,black_36%)]
-                            md:max-w-[90vw]
-                            md:max-h-[52vh]
                         "
                         style={{
                             transformOrigin: "center top",
@@ -245,14 +243,15 @@ export const ClosingMandap = () => {
                     className="
                         absolute
                         inset-x-0
-                        bottom-[2vh]
                         z-30
                         flex
                         justify-center
-                        px-2
                         pointer-events-none
+                        px-2
                         opacity-0
                         will-change-transform
+
+                        top-[clamp(74vh,76vh,79vh)]
                     "
                 >
                     <img
@@ -262,11 +261,9 @@ export const ClosingMandap = () => {
                         className="
                             block
                             w-auto
-                            max-w-[120vw]
-                            max-h-[26vh]
+                            max-w-[clamp(75vw,85vw,100vw)]
+                            max-h-[clamp(14vh,18vh,22vh)]
                             object-contain
-                            md:max-w-[500vw]
-                            md:max-h-[26vh]
                         "
                     />
                 </div>

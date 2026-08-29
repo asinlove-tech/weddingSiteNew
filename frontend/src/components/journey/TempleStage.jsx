@@ -11,7 +11,7 @@ export const TempleStage = () => {
 
     useEffect(() => {
         const probe = new Image();
-        probe.src = "/images/gopuram-long.webp";
+        probe.src = "/weddingSiteNew/images/gopuram-long.webp";
         probe.onload = () => {
             naturalRef.current.w = probe.naturalWidth || naturalRef.current.w;
             naturalRef.current.h = probe.naturalHeight || naturalRef.current.h;
@@ -111,7 +111,7 @@ export const TempleStage = () => {
             <div
                 ref={imgRef}
                 className="temple-stage-img"
-                style={{ backgroundImage: "url(/images/gopuram-long.webp)" }}
+                style={{ backgroundImage: "url(/weddingSiteNew/images/gopuram-long.webp)" }}
             />
             <div className="absolute inset-0 bg-[#E8A35C]/[0.05]" />
         </div>
