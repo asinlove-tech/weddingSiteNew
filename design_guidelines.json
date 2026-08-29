@@ -1,0 +1,136 @@
+{
+  "theme": "Light, warm, sophisticated South Indian temple journey",
+  "typography": {
+    "fonts": {
+      "headings": "'Cormorant Garamond', serif",
+      "body": "'Inter', sans-serif"
+    },
+    "scales": {
+      "h1": "text-5xl sm:text-6xl md:text-7xl font-light tracking-tight text-dark-charcoal",
+      "h2": "text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-dark-charcoal",
+      "h3": "text-2xl sm:text-3xl font-light text-deep-peacock-blue",
+      "body": "text-base sm:text-lg font-normal leading-relaxed text-dark-charcoal/80",
+      "caption": "text-sm tracking-[0.2em] uppercase text-antique-gold font-medium"
+    }
+  },
+  "colors": {
+    "ivory": "#FDFBF7",
+    "antique_gold": "#C5A059",
+    "temple_teal": "#008080",
+    "terracotta": "#E2725B",
+    "deep_peacock_blue": "#0A435C",
+    "muted_marigold": "#F3A953",
+    "jasmine_white": "#FFFFFF",
+    "sage_green": "#8A9A5B",
+    "dark_charcoal": "#2A2A2A",
+    "background_primary": "#FDFBF7",
+    "background_secondary": "#FFFFFF",
+    "text_primary": "#2A2A2A",
+    "accent": "#C5A059"
+  },
+  "visual_enhancers": {
+    "carpet_strip": "A continuous vertical Temple Teal (#008080) background strip serving as a 'carpet' that connects the Hero, Ganesha, and Celebration sections.",
+    "wooden_frame": "CSS-styled antique wood frame utilizing box-shadow, multi-layered borders (e.g., border-[#8b5a2b] and inset shadows), and slight border-radius to encase the slideshow.",
+    "oval_cards": "CSS clip-path: ellipse(50% 40% at 50% 50%) or border-radius: 50% 50% for the cocktail and muhurtham images, embellished with a 1px antique_gold border.",
+    "mandap_transition": "Linear gradient overlay that transitions from day (transparent) to dusk (deep peacock blue to dark charcoal at 70% opacity) revealing the mandap."
+  },
+  "grids_and_layouts": {
+    "hero": "100vh full-bleed container with centered text, overlaying the Parallax Gopuram.",
+    "celebrations": "CSS Grid (grid-cols-1 md:grid-cols-2) with generous gap (gap-16) to showcase the two oval cards side-by-side on desktop, stacked on mobile.",
+    "info_cards": "Bento-style CSS Grid (grid-cols-1 md:grid-cols-2 lg:grid-cols-4) with padding (p-8) and soft shadows for the 4 Things to Know cards.",
+    "general_spacing": "py-24 to py-32 for section vertical padding to ensure breathing room and slow scroll immersion."
+  },
+  "motion_and_animations": {
+    "hero_parallax": "Framer Motion useScroll and useTransform for slow scale-up and upward translation of the Gopuram image to simulate 'walking in'.",
+    "ganesha_scroll": "Framer Motion scaling (e.g., scale from 1.2 to 1) and translating (y from 50 to 0) as user scrolls into the Temple Blessing section.",
+    "oval_card_reveal": "Scroll-triggered animation removing a blur filter (blur-md to blur-none) and fading in (opacity 0 to 1).",
+    "crossfade_slideshow": "AnimatePresence from framer-motion transitioning opacity over 2 seconds, running on a 4-second interval.",
+    "dusk_finale": "Scroll-triggered color transition of the background from Ivory to a Dusk overlay, slowly revealing the Mandap artwork.",
+    "accessibility": "Check window.matchMedia('(prefers-reduced-motion: reduce)') and disable parallax/fades if true."
+  },
+  "components": [
+    {
+      "name": "HeroSection",
+      "path": "src/components/sections/HeroSection.jsx",
+      "description": "Full-viewport height. Contains the Temple Gopuram artwork with slow walk-in parallax. Features the teal carpet strip starting at the bottom center."
+    },
+    {
+      "name": "TempleBlessing",
+      "path": "src/components/sections/TempleBlessing.jsx",
+      "description": "Ganesha line-art rising and scaling down on scroll. Invitation text fades in. Teal carpet continues."
+    },
+    {
+      "name": "WeddingCelebrations",
+      "path": "src/components/sections/WeddingCelebrations.jsx",
+      "description": "Two oval event cards (Cocktail and Muhurtham) with blur-reduction entrance animations. Teal carpet ends gracefully here."
+    },
+    {
+      "name": "VenueAndMap",
+      "path": "src/components/sections/VenueAndMap.jsx",
+      "description": "Minimal section with a map pin icon, brief text, and an Antique Gold CTA button linking to Google Maps."
+    },
+    {
+      "name": "MeetTheCouple",
+      "path": "src/components/sections/MeetTheCouple.jsx",
+      "description": "Short intro paragraph next to or above an Antique wooden photo frame component featuring a 4-image auto-fading slideshow."
+    },
+    {
+      "name": "ThingsToKnow",
+      "path": "src/components/sections/ThingsToKnow.jsx",
+      "description": "4 minimal info cards with icons for Weather, Attire, Travel Tips, and Things to Do. Last card acts as a link to a placeholder document."
+    },
+    {
+      "name": "RSVPAndWishlist",
+      "path": "src/components/sections/RSVPAndWishlist.jsx",
+      "description": "Minimalist paired or stacked layout. One clear RSVP button and an understated Wishlist button."
+    },
+    {
+      "name": "ClosingScene",
+      "path": "src/components/sections/ClosingScene.jsx",
+      "description": "Gradual dusk transition revealing the mandap bride & groom artwork. Thank-you overlay text, then soft fade to Ivory."
+    }
+  ],
+  "image_urls": {
+    "temple_gopuram": {
+      "url": "https://images.unsplash.com/photo-1554554497-0095c34db3ec?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwyfHxpbmRpYW4lMjB0ZW1wbGUlMjBnb3B1cmFtJTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc4NTUzMTkyNnww&ixlib=rb-4.1.0&q=85",
+      "category": "Hero Background",
+      "description": "Brown temple gopuram under cloudy sky to be used for the parallax walk-in."
+    },
+    "ganesha": {
+      "url": "https://images.unsplash.com/photo-1567878673047-0451c851056e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwxfHxsb3JkJTIwZ2FuZXNoYSUyMGFydHxlbnwwfHx8fDE3ODI5NjA2MjR8MA&ixlib=rb-4.1.0&q=85",
+      "category": "Temple Blessing",
+      "description": "Lord Ganesha image (to be treated with CSS for the antique gold line-art effect or used as placeholder)."
+    },
+    "cocktail_illustration": {
+      "url": "https://images.unsplash.com/photo-1500217052183-bc01eee1a74e?crop=entropy&cs=srgb&fm=jpg",
+      "category": "Event Card - Cocktail",
+      "description": "Vintage cocktail drink representing the evening event."
+    },
+    "mandap_finale": {
+      "url": "https://images.unsplash.com/photo-1587271636175-90d58cdad458?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjB3ZWRkaW5nJTIwY2VyZW1vbnklMjBmaXJlJTIwbWFuZGFwfGVufDB8fHx8MTc4NTEyNzU2OHww&ixlib=rb-4.1.0&q=85",
+      "category": "Finale & Muhurtham Card",
+      "description": "Indian wedding mandap scene to be used for the final dusk reveal and Muhurtham event card."
+    }
+  },
+  "instructions_to_main_agent": [
+    "Build out the sections sequentially to maintain the 'continuous journey' storytelling feel.",
+    "Implement the 'Teal Carpet' as a fixed or absolute positioned vertical line in the background of the first 3 sections.",
+    "Use framer-motion heavily for scroll-linked animations: the parallax gopuram, the Ganesha rise, and the event card blur reveals.",
+    "Style the photo frame in Meet The Couple using deep rich browns, multiple borders, and an inset shadow to resemble antique wood.",
+    "Ensure all buttons (RSVP, Maps, Wishlist) follow an elegant, minimal style: transparent backgrounds with Antique Gold or Temple Teal borders, transforming to filled on hover.",
+    "Add 'data-testid' to all buttons and interactive elements for testing.",
+    "Ensure mobile responsiveness: grid layouts should collapse to 1 column, font sizes should scale down gracefully, and the parallax effects should be subtler on mobile.",
+    "Use standard semantic HTML and pure Tailwind inside React components. Avoid Shadcn for standard layout wrappers, but you can use its primitive hooks or basic components if needed for interactive forms/dialogs.",
+    "At the end of the site, implement a height buffer that transitions the background color into Ivory to give a smooth finish."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do not use generic centered layouts or simplistic gradients.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Do not apply 'transition: all'. Apply specific transitions like 'transition-opacity', 'transition-transform'.",
+    "Never use purely transparent backgrounds under text. Use slight blurs (backdrop-blur-md) with subtle color tints.",
+    "Every interaction needs micro-animations - hover states, press states.",
+    "Prioritize optical alignment over strict geometric alignment when necessary.",
+    "Never use placeholder URLs (via.placeholder.com). ALWAYS use the provided Unsplash URLs.",
+    "All interactive elements MUST include a 'data-testid' attribute (e.g., data-testid='rsvp-button')."
+  ]
+}
