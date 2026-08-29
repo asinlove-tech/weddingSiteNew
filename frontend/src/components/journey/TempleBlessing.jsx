@@ -13,77 +13,90 @@ export const TempleBlessing = () => {
     const namesContainerRef = useRef(null);
 
     useRafScroll(() => {
-
         const section = sectionRef.current;
         const img = shrineImgRef.current;
         const spacer = spacerRef.current;
+        const namesContainer = namesContainerRef.current;
+        const namesEl = namesRef.current;
         if (!section || !img) return;
-        const rect = section.getBoundingClientRect();
+
         const vh = window.innerHeight;
+
+        // ---- READS (all batched together — reading again after a write forces
+        // a synchronous layout flush, which is what caused the stutter on fast
+        // back-and-forth scrolling) ----
+        const rect = section.getBoundingClientRect();
+        const ncRect = namesContainer ? namesContainer.getBoundingClientRect() : null;
+        // Anchor to the wrapper that directly contains the spacer, not the
+        // section. The section also contains the names heading above it,
+        // whose height swings from ~1.45rem on mobile to text-7xl on large
+        // screens — using sectionTop silently baked that (device-dependent)
+        // height into the offset and was the main cause of Ganesha landing
+        // in different spots on different devices.
+        const revealRect = spacer ? spacer.parentElement.getBoundingClientRect() : null;
+        // Ganesha's own rendered height (not vh) — its CSS is clamped
+        // (h-[38vw] with min/max on mobile, fixed 400px on desktop), so an
+        // offset based on vh alone doesn't track its actual size.
+        const imgHeight = img.offsetHeight;
+        // `spacer.style.height` changes the total page height — it's a
+        // LAYOUT write, not just a paint one, so recomputing it on every
+        // scroll tick forces the browser to re-layout everything below this
+        // section (Wedding Celebrations, Venue, Meet the Couple, ...) on
+        // every frame, even while the user has scrolled well past this
+        // section. Only recompute/write it while this section is actually
+        // near the viewport; once it's safely out of view, freeze it at its
+        // last value so scrolling through later sections stays untouched.
+        const sectionRelevant = rect.top < vh * 1.5 && rect.bottom > -vh * 0.5;
+        const templeStage = sectionRelevant ? document.querySelector(".temple-stage-img") : null;
+        const carpetDocumentY = templeStage?.parentElement
+            ? Number(templeStage.parentElement.dataset.carpetDocumentY)
+            : NaN;
+
+        // ---- COMPUTE ----
         const p = Math.min(1, Math.max(0, (vh * 0.9 - rect.top) / (vh * 1.15)));
 
-        // Spacer calculation: use TempleStage's computed carpetDocumentY when available.
-        if (spacer) {
+        let spacerHeight = null;
+        if (spacer && revealRect && sectionRelevant) {
             const MAX_SPACER = Math.round(vh * 6);
+            const revealTopDocY = revealRect.top + window.scrollY;
+            // Put Ganesha slightly inside the carpet, in proportion to his
+            // own rendered height so the same fraction of the artwork sits
+            // inside the carpet band on every device.
+            const ganeshaTopOffset = imgHeight > 0 ? imgHeight * 0.30 : vh * 0.3;
+            const computed = Number.isFinite(carpetDocumentY)
+                ? Math.round(carpetDocumentY - revealTopDocY - ganeshaTopOffset)
+                : Math.round(vh * 0.5);
+            spacerHeight = Math.max(0, Math.min(MAX_SPACER, computed));
+        }
 
-            const templeStage = document.querySelector(".temple-stage-img");
-            const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const showShrine = rect.top <= vh * 0.6; // carpet trigger point
 
-            let computed = null;
+        let namesOpacity = 1;
+        let namesTranslate = 0;
+        let namesBlur = 0;
+        if (ncRect) {
+            const range = Math.max(1, Math.round(vh * 0.45));
+            const start = Math.max(0, -ncRect.top);
+            const t = Math.min(1, start / range);
+            namesOpacity = 1 - t;
+            namesTranslate = Math.round(-t * 20);
+            namesBlur = Math.round(t * 4);
+        }
 
-            if (templeStage?.parentElement) {
-                const carpetDocumentY = Number(
-                    templeStage.parentElement.dataset.carpetDocumentY
-                );
-
-                if (Number.isFinite(carpetDocumentY)) {
-                    // Put the Ganesha slightly inside the carpet.
-                    const ganeshaTopOffset = vh * 0.3;
-
-                    computed = Math.round(
-                        carpetDocumentY - sectionTop - ganeshaTopOffset
-                    );
-                }
-            }
-
-            if (computed === null) {
-                computed = Math.round(vh * 0.5);
-            }
-
-            spacer.style.height = `${Math.max(0, Math.min(MAX_SPACER, computed))}px`;
+        // ---- WRITES (all batched together) ----
+        if (spacer && spacerHeight !== null) {
+            spacer.style.height = `${spacerHeight}px`;
         }
 
         // Let RAF own transform: scale + small translate from bottom. No transform transitions.
         img.style.transformOrigin = "center bottom";
-        img.style.transform = `translateY(${ -p * 40 }px) scale(${1 - p * 0.35})`;
-        // Carpet trigger only controls opacity now (no transform changes)
-        const region = section; // TempleBlessing is the carpet region
-        if (region) {
-            const rRect = region.getBoundingClientRect();
-            const triggerPoint = vh * 0.6; // when region top is at 60% viewport
-            const shrine = shrineImgRef.current;
-            const namesEl = namesRef.current;
-            if (rRect.top <= triggerPoint) {
-                if (shrine) shrine.style.opacity = "1";
-                if (namesEl) {
-                    namesEl.style.opacity = "1";
-                }
-            } else {
-                if (shrine) shrine.style.opacity = "0";
-            }
-        }
+        img.style.transform = `translateY(${-p * 40}px) scale(${1 - p * 0.35})`;
+        img.style.opacity = showShrine ? "1" : "0";
 
-        // Smooth sticky names transition: fade/translate out as container scrolls
-        const namesContainer = namesContainerRef.current;
-        const namesEl = namesRef.current;
-        if (namesContainer && namesEl) {
-            const ncRect = namesContainer.getBoundingClientRect();
-            const range = Math.max(1, Math.round(vh * 0.45));
-            const start = Math.max(0, -ncRect.top);
-            const t = Math.min(1, start / range);
-            namesEl.style.opacity = String(1 - t);
-            namesEl.style.transform = `translateY(${Math.round(-t * 20)}px)`;
-            namesEl.style.filter = `blur(${Math.round(t * 4)}px)`;
+        if (namesEl) {
+            namesEl.style.opacity = String(namesOpacity);
+            namesEl.style.transform = `translateY(${namesTranslate}px)`;
+            namesEl.style.filter = `blur(${namesBlur}px)`;
         }
     });
 
@@ -177,7 +190,7 @@ export const TempleBlessing = () => {
 
                 <div
                     data-testid="blessing-text"
-                    className="relative mt-4 flex w-full max-w-2xl flex-col items-center gap-5 px-6 py-14 text-center md:max-w-3xl md:py-16"
+                    className="relative mt-2 flex w-full max-w-2xl flex-col items-center gap-5 px-6 py-14 text-center md:max-w-3xl md:py-16"
                 >
                     <div
                         aria-hidden="true"

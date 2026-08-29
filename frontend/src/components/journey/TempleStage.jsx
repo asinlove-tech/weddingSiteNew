@@ -3,10 +3,12 @@ import { useRafScroll } from "@/hooks/useRafScroll";
 
 const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
 
+// Must match `.temple-stage-img { inset: -2%; transform-origin: center top; }` in index.css.
+const STAGE_INSET_PCT = 0.02;
+
 export const TempleStage = () => {
     const imgRef = useRef(null);
     const containerRef = useRef(null);
-    const lastLogRef = useRef(0);
     const naturalRef = useRef({ w: 578, h: 2000 });
 
     useEffect(() => {
@@ -33,8 +35,17 @@ export const TempleStage = () => {
         // Source pixel where carpet begins (measured from top of source image)
         const CARPET_SRC_Y = 845;
 
-        // background-size: cover -> scale image so it fills the viewport
-        const scale = Math.max(vw / SRC_W, vh / SRC_H);
+        // .temple-stage-img sits inset -2% inside the viewport-sized fixed
+        // container, so its actual box is ~4% larger than the viewport on
+        // each axis, and its top edge sits above the viewport top. The
+        // "cover" scale and background-position math must use THIS box, not
+        // the raw viewport, or the computed carpet position drifts.
+        const boxW = vw * (1 + STAGE_INSET_PCT * 2);
+        const boxH = vh * (1 + STAGE_INSET_PCT * 2);
+        const boxTop = -STAGE_INSET_PCT * vh;
+
+        // background-size: cover -> scale image so it fills the box
+        const scale = Math.max(boxW / SRC_W, boxH / SRC_H);
         const renderedH = SRC_H * scale;
 
         // compute background-position Y percent currently applied.
@@ -57,40 +68,21 @@ export const TempleStage = () => {
         img.style.transform = `scale(${parallaxScale})`;
         img.style.opacity = String(1 - seg(p, 0.86, 1.0));
 
-        // Calculate the top offset of the rendered image inside the fixed container.
+        // Calculate the top offset of the rendered image inside its own box.
         // For CSS background-position percentages: the point at `posY%` of the
-        // image is aligned to `posY%` of the container. From that we derive
-        // the image's top position relative to the viewport.
-        const imageTop = (posY / 100) * (vh - renderedH);
-        const untransformedCarpetY = imageTop + CARPET_SRC_Y * scale;
-        // Account for the transform: map the untransformed Y through the
-        // applied scale centered on the viewport center.
-        const centerY = vh / 2;
+        // image is aligned to `posY%` of the box. From that we derive the
+        // image's top position relative to the box, then the viewport.
+        const imageTopInBox = (posY / 100) * (boxH - renderedH);
+        const untransformedCarpetY = boxTop + imageTopInBox + CARPET_SRC_Y * scale;
+
+        // CSS sets `transform-origin: center top` on this element, i.e. the
+        // scale pivots around the box's own top edge (boxTop) — not the
+        // viewport's vertical center. Mapping through the wrong origin was
+        // the main source of the carpet-position drift across screen sizes.
         const carpetViewportY =
-            centerY + (untransformedCarpetY - centerY) * parallaxScale;
+            boxTop + (untransformedCarpetY - boxTop) * parallaxScale;
 
-        // Expose the computed carpet Y on the container for other components
-        // to read, and keep a console debug to help verify mapping across viewports.
-        try {
-            const now = Date.now();
-            if (now - lastLogRef.current > 300) {
-                lastLogRef.current = now;
-                console.debug("[TempleStage] mapping", {
-                    vw,
-                    vh,
-                    SRC_W,
-                    SRC_H,
-                    scale,
-                    renderedH,
-                    posY,
-                    imageTop,
-                    carpetViewportY,
-                });
-            }
-        } catch (e) {
-            // ignore
-        }
-
+        // Expose the computed carpet Y on the container for other components to read.
         container.dataset.carpetViewportY = String(Math.round(carpetViewportY));
         container.dataset.carpetDocumentY = String(
             Math.round(window.scrollY + carpetViewportY)
