@@ -85,7 +85,7 @@ export const infoSection = {
             id: "attire",
             icon: "attire",
             title: "Traditional Attire",
-            text: "We would love to see you in your festive best — silk sarees, veshtis, kurta sets and everything in between.",
+            text: "We would love to see you in your festive best - silk sarees, veshtis, kurta sets and everything in between.",
         },
         {
             id: "travel",
