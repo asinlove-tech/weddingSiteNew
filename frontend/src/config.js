@@ -97,7 +97,7 @@ export const infoSection = {
             id: "explore",
             icon: "explore",
             title: "While You're in Coimbatore",
-            text: "Temples, hills, good food and filter coffee — a few of our favourites for a little adventure beyond the wedding.",
+            text: "Temples, hills, good food and filter coffee - a few of our favourites for a little adventure beyond the wedding.",
             linkLabel: "Read our recommendations",
             href: "https://canva.link/asinlovecbe",
         },
@@ -106,7 +106,7 @@ export const infoSection = {
 
 export const rsvp = {
     title: "RSVP",
-    note: "We're excited to hear from you! Kindly let us know if you can join us — please RSVP by September 25th.",
+    note: "We're excited to hear from you! Kindly let us know if you can join us - please RSVP by September 25th.",
     buttonLabel: "RSVP",
     // WhatsApp RSVP link. Replace the phone number below with the final RSVP number.
     url: "https://wa.me/8838197753?text=Hi%20Amit%20and%20Sakthi!%20Count%20us%20in%20for%20the%20celebration!%20Name%3A%20%5BYour%20Name%5D%20%7C%20Attending%3A%20Yes%2FNo%20%7C%20Guests%3A%20%5BNumber%5D",
@@ -116,7 +116,7 @@ export const rsvp = {
 export const wishlist = {
     title: "Wedding Wishlist",
     message:
-        "Your presence is the best gift ❤️ But if you'd like to spoil us a little, feel free to gift us anything you fancy! We've also put together a wishlist if you need some inspiration — claim a gift, or chip in towards one with the gang. Solo mission or group project, totally up to you!",
+        "Your presence is the best gift ❤️ But if you'd like to spoil us a little, feel free to gift us anything you fancy! We've also put together a wishlist if you need some inspiration - claim a gift, or chip in towards one with the gang. Solo mission or group project, totally up to you!",
     buttonLabel: "View Wishlist",
     url: "https://hazlnut.in/wishlist/asinlove",
 };
